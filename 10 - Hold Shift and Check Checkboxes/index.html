@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Andy's hold and shift multiple checkboxes</title>
+    <style>
+      html {
+        font-family: sans-serif;
+        background: lightgrey;
+      }
+      .inbox {
+        max-width: 400px;
+        margin: 50px auto;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+      }
+      .item {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #f1f1f1;
+      }
+      .item:last-child {
+        border-bottom: 0;
+      }
+      input:checked + p {
+        background: #f9f9f9;
+        text-decoration: line-through;
+      }
+      input[type="checkbox"] {
+        margin: 20px;
+      }
+      p {
+        margin: 0;
+        padding: 20px;
+        transition: background 0.2s;
+        flex: 1;
+        font-family: 'helvetica neue';
+        font-size: 20px;
+        font-weight: 200;
+        border-left: 1px solid #d1e2ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="inbox">
+      <div class="item">
+        <input type="checkbox">
+        <p>This is an inbox layout.</p>
+      </div>
+      <div class="item">
+        <input type="checkbox">
+        <p>Check one item</p>
+      </div>
+      <div class="item">
+        <input type="checkbox">
+        <p>Hold down your shift key</p>
+      </div>
+      <div class="item">
+        <input type="checkbox">
+        <p>Check a lower item</p>
+      </div>
+      <div class="item">
+        <input type="checkbox">
+        <p>Everything in between should also be set to checked</p>
+      </div>
+      <div class="item">
+        <input type="checkbox">
+        <p>Try to do it without any libraries</p>
+      </div>
+      <div class="item">
+        <input type="checkbox">
+        <p>Just regular JavaScript</p>
+      </div>
+      <div class="item">
+        <input type="checkbox">
+        <p>Goodluck!</p>
+      </div>
+      <div class="item">
+        <input type="checkbox">
+        <p>Don't forget to tweet your result!</p>
+      </div>
+    </div>
+  <script>
+    let isShiftKeyDown = false;
+    let lastIndexChecked = -1;
+    const SHIFT_KEY = 16
+    function handleKeyDown(e) {
+      if (e.keyCode === SHIFT_KEY) {
+        isShiftKeyDown = true;
+      }
+    }
+    function handleKeyUp(e) {
+      if (e.keyCode === SHIFT_KEY) {
+        isShiftKeyDown = false;
+      }
+    }
+    function handleCheckbox(e) {
+      if (e.target.checked) {
+        if (isShiftKeyDown && lastIndexChecked !== -1) {
+          const checkedIndex = Number(e.target.dataset.index);
+          const start = Math.min(lastIndexChecked, checkedIndex)
+          const end = Math.max(lastIndexChecked, checkedIndex)
+          // get all the checkboxes
+          let options = Array.from(document.querySelectorAll("input[type='checkbox']"));
+          options.forEach((option, index) => {
+            if (index >= start && index <= end) {
+              option.checked = true
+            }
+          })
+        } else {
+          lastIndexChecked = Number(e.target.dataset.index)
+        }
+
+
+
+
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    let index = 0;
+    checkboxes.forEach(checkbox => {
+      checkbox.dataset.index = index++;
+      document.addEventListener("change", handleCheckbox)
+    })
+
+  </script>
+  </body>
+</html>
