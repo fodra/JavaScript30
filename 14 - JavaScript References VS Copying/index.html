@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Andy's JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // Let's say we have an array
+    const players = ['Andy', 'Sarah', 'Ryan', 'Poppy'];
+
+    // Make a copy of an array
+    const playersCopy = Array.from(players);
+    const playersOne = [].concat(players);
+    const playersTwo = [...players];
+    const playersThree = players.slice();
+
+    // with Objects
+    const person = {
+      name: 'Andy',
+      age: 40
+    };
+
+    // Make a copy of an object
+    const personCopy = {
+      ...person
+    };
+    const personOne = Object.assign({}, person);
+    const personTwo = JSON.parse(JSON.stringify(person));
+  </script>
+
+</body>
+</html>
