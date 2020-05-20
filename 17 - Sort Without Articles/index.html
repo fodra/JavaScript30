@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Andy's Sort Without Article</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: url("https://source.unsplash.com/nDqA4d5NL0k/2000x2000");
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      #bands {
+        list-style: inside square;
+        font-size: 20px;
+        background: white;
+        width: 500px;
+        margin: auto;
+        padding: 0;
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
+      }
+
+      #bands li {
+        border-bottom: 1px solid #efefef;
+        padding: 20px;
+      }
+
+      #bands li:last-child {
+        border-bottom: 0;
+      }
+
+      a {
+        color: lightblue;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="bands"></ul>
+    <script>
+      const bands = [
+        "The Plot in You",
+        "The Devil Wears Prada",
+        "Pierce the Veil",
+        "Norma Jean",
+        "The Bled",
+        "Say Anything",
+        "The Midway State",
+        "We Came as Romans",
+        "Counterparts",
+        "Oh, Sleeper",
+        "A Skylit Drive",
+        "Anywhere But Here",
+        "An Old Dog",
+      ];
+      const articles = ["the", "a", "an"];
+      let articleIndex = -1;
+      const listContents = bands
+        .map((name) => {
+          const smallBand = name.toLowerCase();
+          const isFound = articles.some((article, index) => {
+            articleIndex = smallBand.startsWith(`${article} `) ? index : -1;
+            return articleIndex !== -1;
+          });
+          return {
+            display: `<li>${name}</li>`,
+            sort: isFound
+              ? smallBand.substr(articles[articleIndex].length + 1)
+              : smallBand,
+          };
+        })
+        .sort((a, b) => a.sort.localeCompare(b.sort))
+        .map((band) => band.display)
+        .join("");
+
+      const bandsElement = document.querySelector("#bands");
+      bandsElement.innerHTML = listContents;
+    </script>
+  </body>
+</html>
