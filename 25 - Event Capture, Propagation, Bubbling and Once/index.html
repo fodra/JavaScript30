@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Andy's Understanding JavaScript's Capture</title>
+    <style>
+      html {
+        box-sizing: border-box;
+      }
+
+      *, *:before, *:after {
+          box-sizing: inherit;
+      }
+
+      div {
+        width: 100%;
+        padding: 100px;
+      }
+
+      .one {
+        background: thistle;
+      }
+
+      .two {
+        background: mistyrose;
+      }
+
+      .three {
+        background: coral;
+      }
+
+    </style>
+  </head>
+  <body class="bod">
+    <div class="one">
+      <div class="two">
+        <div class="three"></div>
+      </div>
+    </div>
+  <script>
+    const divs = document.querySelectorAll("div");
+
+    function logText(e) {
+      /* bubbling events */
+      console.log(this.classList.value);
+      e.stopPropagation();
+    }
+
+    const options = {
+      capture: false,
+      once: true
+    };
+
+    divs.forEach(d => d.addEventListener("click", logText, options));
+  </script>
+  </body>
+</html>
